@@ -1,5 +1,6 @@
 package com.project.ecommerce.service.impl;
 
+
 import com.project.ecommerce.dto.LoginRequest;
 import com.project.ecommerce.dto.Response;
 import com.project.ecommerce.dto.UserDto;
@@ -9,8 +10,9 @@ import com.project.ecommerce.exception.InvalidCredentialsException;
 import com.project.ecommerce.exception.NotFoundException;
 import com.project.ecommerce.mapper.EntityDtoMapper;
 import com.project.ecommerce.repository.UserRepo;
-
+import com.project.ecommerce.security.JwtUtils;
 import com.project.ecommerce.service.interf.UserService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-
+    private final JwtUtils jwtUtils;
     private final EntityDtoMapper entityDtoMapper;
 
 
@@ -70,10 +72,12 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())){
             throw new InvalidCredentialsException("Password does not match");
         }
+        String token = jwtUtils.generateToken(user);
 
         return Response.builder()
                 .status(200)
                 .message("User Successfully Logged In")
+                .token(token)
                 .expirationTime("6 Month")
                 .role(user.getRole().name())
                 .build();
