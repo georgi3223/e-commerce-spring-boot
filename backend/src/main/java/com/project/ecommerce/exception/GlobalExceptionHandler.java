@@ -1,6 +1,5 @@
 package com.project.ecommerce.exception;
 
-
 import com.project.ecommerce.dto.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response> handleAllException(Exception ex, WebRequest request){
+    public ResponseEntity<Response> handleAllException(Exception ex, WebRequest request) {
         Response errorResponse = Response.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .message(ex.getMessage())
@@ -21,7 +20,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Response> handleNotFoundException(NotFoundException ex, WebRequest request){
+    public ResponseEntity<Response> handleNotFoundException(NotFoundException ex, WebRequest request) {
         Response errorResponse = Response.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .message(ex.getMessage())
@@ -30,7 +29,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity<Response> handleInvalidCredentialsExceptionException(InvalidCredentialsException ex, WebRequest request){
+    public ResponseEntity<Response> handleInvalidCredentialsExceptionException(InvalidCredentialsException ex,
+            WebRequest request) {
         Response errorResponse = Response.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .message(ex.getMessage())

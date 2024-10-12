@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -22,9 +21,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepo categoryRepo;
     private final EntityDtoMapper entityDtoMapper;
-
-
-
 
     @Override
     public Response createCategory(CategoryDto categoryRequest) {
@@ -39,7 +35,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Response updateCategory(Long categoryId, CategoryDto categoryRequest) {
-        Category category = categoryRepo.findById(categoryId).orElseThrow(()-> new NotFoundException("Category Not Found"));
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Category Not Found"));
         category.setName(categoryRequest.getName());
         categoryRepo.save(category);
         return Response.builder()
@@ -55,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .map(entityDtoMapper::mapCategoryToDtoBasic)
                 .collect(Collectors.toList());
 
-        return  Response.builder()
+        return Response.builder()
                 .status(200)
                 .categoryList(categoryDtoList)
                 .build();
@@ -63,7 +60,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Response getCategoryById(Long categoryId) {
-        Category category = categoryRepo.findById(categoryId).orElseThrow(()-> new NotFoundException("Category Not Found"));
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Category Not Found"));
         CategoryDto categoryDto = entityDtoMapper.mapCategoryToDtoBasic(category);
         return Response.builder()
                 .status(200)
@@ -73,7 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Response deleteCategory(Long categoryId) {
-        Category category = categoryRepo.findById(categoryId).orElseThrow(()-> new NotFoundException("Category Not Found"));
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Category Not Found"));
         categoryRepo.delete(category);
         return Response.builder()
                 .status(200)

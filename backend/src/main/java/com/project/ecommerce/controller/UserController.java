@@ -1,6 +1,5 @@
 package com.project.ecommerce.controller;
 
-
 import com.project.ecommerce.dto.Response;
 import com.project.ecommerce.service.interf.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,15 +16,14 @@ public class UserController {
 
     private final UserService userService;
 
-
     @GetMapping("/get-all")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> getAllUsers(){
+    public ResponseEntity<Response> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/my-info")
-    public ResponseEntity<Response> getUserInfoAndOrderHistory(){
+    public ResponseEntity<Response> getUserInfoAndOrderHistory() {
         return ResponseEntity.ok(userService.getUserInfoAndOrderHistory());
     }
 }

@@ -22,25 +22,24 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
-    private final  CustomUserDetailsService customUserDetailsService;
-
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         String token = getTokenFromRequest(request);
 
-        if (token != null){
+        if (token != null) {
             String username = jwtUtils.getUsernameFromToken(token);
 
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-            if (StringUtils.hasText(username) && jwtUtils.isTokenValid(token, userDetails)){
+            if (StringUtils.hasText(username) && jwtUtils.isTokenValid(token, userDetails)) {
                 log.info("VALID JWT FOR {}", username);
 
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
+                        userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -50,9 +49,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getTokenFromRequest(HttpServletRequest request){
+    private String getTokenFromRequest(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        if (StringUtils.hasText(token) && StringUtils.startsWithIgnoreCase(token, "Bearer ")){
+        if (StringUtils.hasText(token) && StringUtils.startsWithIgnoreCase(token, "Bearer ")) {
             return token.substring(7);
         }
         return null;

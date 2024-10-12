@@ -1,6 +1,5 @@
 package com.project.ecommerce.controller;
 
-
 import com.project.ecommerce.dto.AddressDto;
 import com.project.ecommerce.dto.Response;
 import com.project.ecommerce.service.interf.AddressService;
@@ -19,7 +18,7 @@ public class AddressController {
     private final AddressService addressService;
 
     @PostMapping("/save")
-    public ResponseEntity<Response> saveAndUpdateAddress(@RequestBody AddressDto addressDto){
+    public ResponseEntity<Response> saveAndUpdateAddress(@RequestBody AddressDto addressDto) {
         return ResponseEntity.ok(addressService.saveAndUpdateAddress(addressDto));
     }
 }

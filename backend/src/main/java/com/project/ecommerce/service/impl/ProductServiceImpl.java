@@ -29,10 +29,11 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepo categoryRepo;
     private final EntityDtoMapper entityDtoMapper;
 
-
     @Override
-    public Response createProduct(Long categoryId, MultipartFile image, String name, String description, BigDecimal price) {
-        Category category = categoryRepo.findById(categoryId).orElseThrow(()-> new NotFoundException("Category not found"));
+    public Response createProduct(Long categoryId, MultipartFile image, String name, String description,
+            BigDecimal price) {
+        Category category = categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new NotFoundException("Category not found"));
 
         Product product = new Product();
         product.setCategory(category);
@@ -48,21 +49,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Response updateProduct(Long productId, Long categoryId, MultipartFile image, String name, String description, BigDecimal price) {
-        Product product = productRepo.findById(productId).orElseThrow(()-> new NotFoundException("Product Not Found"));
+    public Response updateProduct(Long productId, Long categoryId, MultipartFile image, String name, String description,
+            BigDecimal price) {
+        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
 
         Category category = null;
         String productImageUrl = null;
 
-        if(categoryId != null ){
-             category = categoryRepo.findById(categoryId).orElseThrow(()-> new NotFoundException("Category not found"));
+        if (categoryId != null) {
+            category = categoryRepo.findById(categoryId).orElseThrow(() -> new NotFoundException("Category not found"));
         }
 
-
-        if (category != null) product.setCategory(category);
-        if (name != null) product.setName(name);
-        if (price != null) product.setPrice(price);
-        if (description != null) product.setDescription(description);
+        if (category != null)
+            product.setCategory(category);
+        if (name != null)
+            product.setName(name);
+        if (price != null)
+            product.setPrice(price);
+        if (description != null)
+            product.setDescription(description);
 
         productRepo.save(product);
         return Response.builder()
@@ -74,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Response deleteProduct(Long productId) {
-        Product product = productRepo.findById(productId).orElseThrow(()-> new NotFoundException("Product Not Found"));
+        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
         productRepo.delete(product);
 
         return Response.builder()
@@ -85,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Response getProductById(Long productId) {
-        Product product = productRepo.findById(productId).orElseThrow(()-> new NotFoundException("Product Not Found"));
+        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product Not Found"));
         ProductDto productDto = entityDtoMapper.mapProductToDtoBasic(product);
 
         return Response.builder()
@@ -123,19 +128,18 @@ public class ProductServiceImpl implements ProductService {
                 .productList(productDtoList)
                 .build();
 
-    }
+    }3
 
     @Override
     public Response searchProduct(String searchValue) {
         List<Product> products = productRepo.findByNameContainingOrDescriptionContaining(searchValue, searchValue);
 
-        if (products.isEmpty()){
+        if (products.isEmpty()) {
             throw new NotFoundException("No Products Found");
         }
         List<ProductDto> productDtoList = products.stream()
                 .map(entityDtoMapper::mapProductToDtoBasic)
                 .collect(Collectors.toList());
-
 
         return Response.builder()
                 .status(200)

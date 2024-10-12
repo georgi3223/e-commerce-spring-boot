@@ -1,6 +1,5 @@
 package com.project.ecommerce.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -26,5 +25,5 @@ public class AddressDto {
 
     private UserDto user;
 
-    private  LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 }

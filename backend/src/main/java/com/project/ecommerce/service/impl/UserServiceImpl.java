@@ -1,6 +1,5 @@
 package com.project.ecommerce.service.impl;
 
-
 import com.project.ecommerce.dto.LoginRequest;
 import com.project.ecommerce.dto.Response;
 import com.project.ecommerce.dto.UserDto;
@@ -23,18 +22,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final EntityDtoMapper entityDtoMapper;
-
 
     @Override
     public Response registerUser(UserDto registrationRequest) {
@@ -63,13 +59,12 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-
-
     @Override
     public Response loginUser(LoginRequest loginRequest) {
 
-        User user = userRepo.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new NotFoundException("Email not found"));
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())){
+        User user = userRepo.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new NotFoundException("Email not found"));
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new InvalidCredentialsException("Password does not match");
         }
         String token = jwtUtils.generateToken(user);
@@ -100,10 +95,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getLoginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String  email = authentication.getName();
+        String email = authentication.getName();
         log.info("User Email is: " + email);
         return userRepo.findByEmail(email)
-                .orElseThrow(()-> new UsernameNotFoundException("User Not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User Not found"));
     }
 
     @Override

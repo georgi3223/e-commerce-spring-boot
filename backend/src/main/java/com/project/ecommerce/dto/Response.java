@@ -18,7 +18,7 @@ public class Response {
 
     private String token;
     private String role;
-    private String  expirationTime;
+    private String expirationTime;
 
     private int totalPage;
     private long totalElement;
