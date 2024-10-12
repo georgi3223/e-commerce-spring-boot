@@ -128,7 +128,7 @@ public class ProductServiceImpl implements ProductService {
                 .productList(productDtoList)
                 .build();
 
-    }3
+    }
 
     @Override
     public Response searchProduct(String searchValue) {

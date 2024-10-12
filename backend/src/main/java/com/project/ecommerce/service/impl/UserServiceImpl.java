@@ -9,7 +9,7 @@ import com.project.ecommerce.exception.InvalidCredentialsException;
 import com.project.ecommerce.exception.NotFoundException;
 import com.project.ecommerce.mapper.EntityDtoMapper;
 import com.project.ecommerce.repository.UserRepo;
-import com.project.ecommerce.security.JwtUtils;
+
 import com.project.ecommerce.service.interf.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
+
     private final EntityDtoMapper entityDtoMapper;
 
     @Override
@@ -67,12 +67,11 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new InvalidCredentialsException("Password does not match");
         }
-        String token = jwtUtils.generateToken(user);
-
+ 
         return Response.builder()
                 .status(200)
                 .message("User Successfully Logged In")
-                .token(token)
+              
                 .expirationTime("6 Month")
                 .role(user.getRole().name())
                 .build();

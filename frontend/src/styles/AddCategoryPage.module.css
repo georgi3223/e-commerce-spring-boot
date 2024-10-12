@@ -1,0 +1,61 @@
+.addCategoryPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f9fafb;
+    padding: 24px;
+  }
+  
+  .message {
+    color: #16a34a;
+    background-color: #dcfce7;
+    border: 1px solid #bbf7d0;
+    border-radius: 0.5rem;
+    padding: 8px 16px;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+  }
+  
+  .categoryForm {
+    width: 100%;
+    max-width: 28rem;
+    background-color: #ffffff;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    padding: 32px;
+  }
+  
+  .formHeading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: center;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    outline: none;
+  }
+  
+  .input:focus {
+    ring-color: #bfdbfe;
+  }
+  
+  .submitButton {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    padding: 12px;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+  }
+  
+  .submitButton:hover {
+    background-color: #1d4ed8;
+  }
+  

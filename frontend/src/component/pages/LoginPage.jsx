@@ -31,8 +31,8 @@ const LoginPage = () => {
     } catch (error) {
       setMessage(
         error.response?.data.message ||
-        error.message ||
-        "unable to Login a user"
+          error.message ||
+          "unable to Login a user"
       );
     }
   };
